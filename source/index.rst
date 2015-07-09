@@ -14,11 +14,17 @@ TokuDB® is a highly scalable, zero-maintenance downtime MySQL storage engine th
 Additional features unique to TokuDB include:
 
 * Up to 25x Data Compression
+
 * Fast Inserts
+
 * Eliminates Slave Lag with :ref:`Read Free Replication <read-free-repl>`
+
 * Hot Schema Changes
+
   * Hot Index Creation - TokuDB tables support insertions, deletions and queries with no down time while indexes are being added to that table
+  
   * Hot column addition, deletion, expansion, and rename - TokuDB tables support insertions, deletions and queries without down-time when an alter table adds, deletes, expands, or renames columns
+
 * On-line Backup (Enterprise Edition)
 
 For more information on installing and using TokuDB for MySQL and MariaDB, click on the following links:
@@ -62,6 +68,6 @@ In practice, slow indexing often leads users to choose a smaller number of sub-o
 
 **Lock Diagnostics**: TokuDB provides users with the tools to diagnose locking and deadlock issues. For more information, see :ref:`Lock Visualization in TokuDB <lock-visual>`.
 
-**Progress Tracking**: Running `SHOW PROCESSLIST` when adding indexes provides status on how many rows have been processed. Running `SHOW PROCESSLIST` also shows progress on queries, as well as insertions, deletions and updates. This information is helpful for estimating how long operations will take to complete.
+**Progress Tracking**: Running ``SHOW PROCESSLIST`` when adding indexes provides status on how many rows have been processed. Running ``SHOW PROCESSLIST`` also shows progress on queries, as well as insertions, deletions and updates. This information is helpful for estimating how long operations will take to complete.
 
 **Fast Recovery**: TokuDB supports very fast recovery, typically less than a minute.

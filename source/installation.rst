@@ -1,5 +1,3 @@
-.. highlight:: mysql
-
 .. _installation:
 
 ============
@@ -16,13 +14,15 @@ Downloading
 To get started, download the appropriate binaries from the `TokuDB Download Page <http://www.tokutek.com/tokudb-for-mysql/download-community/>`_. The file name should follow this convention:
 
 .. code-block:: none
+
    [mysql|mariadb]-[mysql|mariadb version]-tokudb-[tokudb version & build]-linux-x86_64.tar.gz.
 
 For the purposes of this document, we'll use the name of the tarball corresponding to MySQL 5.5.30 with TokuDB v7.1.0. Make sure you use the name of the tarball corresponding to the file you downloaded.
 
 After downloading, optionally verify the MD5 checksum by comparing the results of the following command to the MD5 checksum on the support page:
 
-.. code-block:: bash
+.. code-block:: console
+
    $ md5sum mysql-5.5.30-tokudb-7.1.0-linux-x86_64.tar.gz
 
 At this point, it is a good idea to determine the type of installation you wish to perform. The options are:
@@ -44,51 +44,60 @@ All the operations have to be performed with root privileges because you will ne
 
 1. Create a MySQL specific group. For CentOS distributions, the GID is set to 27. Other Linux distributions may vary, even across instances of the same distribution. It is a good idea to set a uniform GID across all servers. We will use GID 927 for the rest of this document.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ groupadd -g 927 mysql
 
 2. Create a MySQL system user. Similar to GID, the UID in CentOS distributions is set to 27. The user needs to be defined as a *system user*, which implies that it won't have a login shell and home directory. As with the GID, we will use UID 927 for the rest of this document.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ useradd -r -u 927 -g mysql mysql
 
 3. Create the installation base directory. You may specify a different sub-directory tree to follow your installations standard.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ mkdir -pv /opt/tokutek
 
 4. Extract the tarball you downloaded from our website under the base directory. You may use other directories (for example, :file:`/usr/local` or a private directory).
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ cd /opt/tokutek
    $ tar xvzf /path/to/mysql-5.5.30-tokudb-7.1.0-linux-x86_64.tar.gz
 
 5. Create a symbolic link pointing to the newly created directory. This will simplify future upgrades and installations by redefining the symbolic link to a new directory.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ ln -sv mysql-5.5.30-tokudb-7.1.0-linux-x86_64 mysql
 
 6. Change the ownership of the new directory and it's contents to ``mysql:mysql``.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ cd mysql
    $ chown -Rv mysql:mysql
 
 7. Create a default configuration file. You will have to edit this file as needed. You may leave most of the default memory allocation values as-is to allow TokuDB to use as much RAM as possible.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ cp -v support-files/my-small.cnf /etc/my.cnf
 
 8. Add default data and binary directories, and mysqld user. Edit the :file:`/etc/my.cnf` file to specify the database directory, the location for the binaries and the user to use for the mysqld process. These values are going to be needed to make sure the next step succeeds. Add the following lines in the ``[mysqld]`` section of the file replacing the actual values as needed:
 
  .. code-block:: none
+
    datadir = /var/lib/mysql
    basedir = /opt/tokutek/mysql
    user = mysql
 
 9. You might need to edit the resulting :file:`/etc/my.cnf` further to accommodate for other non-default settings. Create the system tables by running the following script. If needed, you may specify the options ``basedir`` and ``datadir`` with the proper paths before the ``--user`` option:
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ scripts/mysql_install_db --user=mysql
 
 10. Create a link in :file:`/etc/init.d` to start TokuDB's server daemon as a service.
@@ -97,12 +106,14 @@ All the operations have to be performed with root privileges because you will ne
 
   Then, create a symbolic link under :file:`/etc/init.d` pointing to the :file:`mysql.server` script:
 
-  .. code-block:: bash
+  .. code-block:: console
+
      $ ln -sv /opt/tokutek/mysql/support-files/mysql.server /etc/init.d/mysql
 
 11. Start MySQL service.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ service mysql start
 
 You may want to modify your ``PATH`` environment variable to include the sub-directory with the client utilities: :file:`/opt/tokutek/mysql/bin`.
@@ -122,23 +133,27 @@ All the operations have to be performed with root privileges because you will ne
 
 1. Create the installation base directory, unless it already exists. You may specify a different subdirectory tree to follow your installations standard.
 
- .. code-block:: bash
+ .. code-block:: console
+
    $ mkdir -pv /opt/tokutek
 
 2. Extract the tarball you downloaded from our website under the base directory.
 
- .. code-block:: bash
+ .. code-block:: console
+
    cd /opt/tokutek
    tar xvzf /path/to/mysql-5.5.30-tokudb-7.1.0-linux-x86_64.tar.gz
 
 3. Shutdown the existing instance. Make sure that it was a clean shutdown. It is important to make sure there are no pending transactions in the log files prior to the upgrade to avoid any potential data corruption.
 
- .. code-block:: bash
+ .. code-block:: console
+
     $ mysqladmin shutdown
 
 4. Create a symbolic link pointing to the newly created directory.
 
- .. code-block:: bash
+ .. code-block:: console
+
     $ ln -sv mysql-5.5.30-tokudb-7.1.0-linux-x86_64 mysql
 
 5. Create a link in :file:`/etc/init.d` to start TokuDB's server daemon as a service.
@@ -147,22 +162,26 @@ All the operations have to be performed with root privileges because you will ne
 
   Then, create a symbolic link under :file:`/etc/init.d` pointing to the :file:`mysql.server` script:
 
-  .. code-block:: bash
+  .. code-block:: console
+
      $ ln -sv /opt/tokutek/mysql/support-files/mysql.server /etc/init.d/mysql
 
 6. Start the new MySQL instance. Make sure there were no errors after the startup completed by inspecting the error log.
 
- .. code-block:: bash
+ .. code-block:: console
+
     $ service mysql start
 
 7. Run :command:`mysql_upgrade` to update the system tables with any changes since the last release. It is important that you run the :command:`mysql_upgrade` utility provided with our binaries.
 
- .. code-block:: bash
+ .. code-block:: console
+
     $ /opt/tokutek/mysql/bin/mysql_upgrade
 
 8. Update the plug-ins. TokuDB v7.1 introduced 3 new plug-ins and removed 2 existing ones. Log in to MySQL and execute the following commands if upgrading a TokuDB database that was prior to v7.1 before the upgrade:
 
- .. code-block::
+ .. code-block:: sql
+
     INSTALL PLUGIN tokudb_trx SONAME 'ha_tokudb.so';
     INSTALL PLUGIN tokudb_locksSONAME 'ha_tokudb.so';
     INSTALL PLUGIN tokudb_lock_waitsSONAME 'ha_tokudb.so';
@@ -178,7 +197,9 @@ Replace an Existing MySQL Instance
 The procedure to replace an existing MySQL instance should be the same as :ref:`Upgrading From Previous Releases of TokuDB <upgrade>`. After converting your tables to TokuDB, you should comment out the global options related to memory caches (``innodb_buffer_pool%``).
 
 .. note:: When upgrading from MySQL 5.1 using InnoDB plug-in to MySQL 5.5 or MariaDB, you need to comment out the lines specifying the InnoDB plug-in libraries in your :file:`my.cnf` file. To verify whether or not the options are enabled, you can use the following command:
-   .. code-block:: bash
+
+   .. code-block:: console
+
       $ my_print_defaults mysqld | grep "ha_inno"
 
 The previous command should return no results for TokuDB to start cleanly.
@@ -192,7 +213,8 @@ This setting can be removed once the installation has been completed.
 
 After running the ``mysql_upgrade`` script, run the following SQL commands to setup the TokuDB plug-in. Use the :command:`mysql` utility. You will need to login into MySQL with a user with sufficient privileges to run the ``install plugin`` command:
 
-.. code-block::
+.. code-block:: sql
+
    INSTALL PLUGIN TokuDB SONAME 'ha_tokudb.so';
    INSTALL PLUGIN tokudb_file_map SONAME 'ha_tokudb.so';
    INSTALL PLUGIN tokudb_fractal_tree_info SONAME 'ha_tokudb.so';
@@ -231,14 +253,14 @@ TokuDB for MariaDB has an unmatched dependency on Ubuntu Server v12.04. Our Mari
 When trying to start the MySQL service without installing the proper library, it will fail with the following error in the log file:
 
 .. code-block:: none
+
    /opt/tokutek/mysql/bin/mysqld:
    error while loading shared libraries: libevent-1.4.so.2:
    cannot open shared object file: No such file or directory
 
 To verify which version you have in place you may use the following command:
 
-.. code-block:: bash
-   :emphasize-lines: 1
+.. code-block:: console
 
    $ dpkg-query -l libevent-*
 
@@ -251,7 +273,8 @@ To verify which version you have in place you may use the following command:
 
 If the line for libevent-1.4 is not in the list, you may install it by issuing the following command:
 
-.. code-block:: bash
+.. code-block:: console
+
    $ sudo apt-get install libevent-1.4
 
 .. _verify:
@@ -261,17 +284,20 @@ Verify the Installation
 
 Start a mysql client session to verify the TokuDB storage engine installation.
 
-.. code-block:: bash
+.. code-block:: console
+
    $ /opt/tokutek/mysql/bin/mysql
 
 The default socket for mysqld is :file:`/tmp/mysql.sock`. At the command prompt, execute the following command:
 
-.. code-block::
+.. code-block:: sql
+
    SHOW PLUGINS;
 
 The output should include the following lines:
 
-.. code-block:: none
+.. code-block:: sql
+
    | TokuDB                        | ACTIVE | STORAGE ENGINE     | ha_tokudb.so ...
    | TokuDB_file_map               | ACTIVE | INFORMATION SCHEMA | ha_tokudb.so ...
    | TokuDB_fractal_tree_info      | ACTIVE | INFORMATION SCHEMA | ha_tokudb.so ...
@@ -282,10 +308,12 @@ The output should include the following lines:
 
 Also execute the following command:
 
-.. code-block::
+.. code-block:: sql
+
    SHOW ENGINES;
 
 The output should include the following line:
 
-.. code-block:: none
+.. code-block:: sql
+
    | TokuDB | YES | Tokutek TokuDB Storage Engine

@@ -1,5 +1,3 @@
-.. highlight:: mysql
-
 .. _quickstart:
 
 ===============
@@ -23,7 +21,9 @@ Creating Tables and Loading Data
 Creating TokuDB Tables
 **********************
 
-TokuDB tables are created the same way as other tables in MySQL by specifying ``engine=TokuDB`` in the table definition. For example, the following command creates a table with a single column and uses the TokuDB storage engine to store its data::
+TokuDB tables are created the same way as other tables in MySQL by specifying ``engine=TokuDB`` in the table definition. For example, the following command creates a table with a single column and uses the TokuDB storage engine to store its data:
+
+.. code-block:: sql
 
  CREATE TABLE table (
    id INT(11) NOT NULL) ENGINE=TokuDB;
@@ -31,7 +31,9 @@ TokuDB tables are created the same way as other tables in MySQL by specifying ``
 Loading Data
 ************
 
-Once TokuDB tables have been created, data can be inserted or loaded using standard MySQL insert or bulk load operations. For example, the following command loads data from a file into the table::
+Once TokuDB tables have been created, data can be inserted or loaded using standard MySQL insert or bulk load operations. For example, the following command loads data from a file into the table:
+
+.. code-block:: sql
 
  LOAD DATA INFILE file
    INTO TABLE table;
@@ -41,7 +43,9 @@ Once TokuDB tables have been created, data can be inserted or loaded using stand
 Migrating Data from an Existing Database
 ****************************************
 
-Use the following command to convert an existing table for the TokuDB storage engine::
+Use the following command to convert an existing table for the TokuDB storage engine:
+
+.. code-block:: sql
 
  ALTER TABLE table
    ENGINE=TokuDB;
@@ -57,7 +61,7 @@ To obtain the logical backup and then bulk load into TokuDB, follow these steps:
 
 1. Create a logical backup of the original table. The easiest way to achieve this is using ``SELECT ... INTO OUTFILE``. Keep in mind that the file will be created on the server.
 
-   .. code-block:: mysql
+   .. code-block:: sql
 
       SELECT * FROM table
         INTO OUTFILE 'file.csv';
@@ -66,7 +70,7 @@ To obtain the logical backup and then bulk load into TokuDB, follow these steps:
 
 3. To load the data into the server use ``LOAD DATA INFILE``. If loading from a machine other than the server use the keyword ``LOCAL`` to point to the file on local machine. Keep in mind that you will need enough disk space on the temporary directory on the server since the local file will be copied onto the server by the MySQL client utility.
 
-   .. code-block:: mysql
+   .. code-block:: sql
 
       LOAD DATA [LOCAL] INFILE 'file.csv';
 
@@ -90,11 +94,15 @@ It is necessary to set the ``tokudb_cache_size`` to a value other than the defau
 
 * **Running other memory heavy processes on the same server as TokuDB**: In many cases, the database process needs to share the system with other server processes like additional database instances, http server, application server, e-mail server, monitoring systems and others. In order to properly configure TokuDB's memory consumption, it's important to understand how much free memory will be left and assign a sensible value for TokuDB. There is no fixed rule, but a conservative choice would be 50% of available RAM while all the other processes are running. If the result is under 2 GB, you should consider moving some of the other processes to a different system or using a dedicated database server.
 
- ``tokudb_cache_size`` is a static variable, so it needs to be set before starting the server and cannot be changed while the server is running. For example, to set up TokuDB's cache to 4G, add the following line to your :file:`my.cnf` file::
+ ``tokudb_cache_size`` is a static variable, so it needs to be set before starting the server and cannot be changed while the server is running. For example, to set up TokuDB's cache to 4G, add the following line to your :file:`my.cnf` file:
+
+ .. code-block:: none
 
   tokudb_cache_size = 4G
 
-* **System using InnoDB and TokuDB**: When using both the TokuDB and InnoDB storage engines, you need to manage the cache size for each. For example, on a server with 16 GB of RAM you could use the following values in your configuration file::
+* **System using InnoDB and TokuDB**: When using both the TokuDB and InnoDB storage engines, you need to manage the cache size for each. For example, on a server with 16 GB of RAM you could use the following values in your configuration file:
+ 
+ .. code-block:: none
 
   innodb_buffer_pool_size = 2G
   tokudb_cache_size = 8G
@@ -123,20 +131,26 @@ The following extensions to the ``optimize`` command have been added in TokuDB v
 
 * **Hot Optimize Throttling**
 
-  By default, table optimization will run with all available resources. To limit the amount of resources, it is possible to limit the speed of table optimization. The ``tokudb_optimize_throttle`` session variable determines an upper bound on how many fractal tree leaf nodes per second are optimized. The default is 0 (no upper bound) with a valid range of [0,1000000]. For example, to limit the table optimization to 1 leaf node per second, use the following setting::
+  By default, table optimization will run with all available resources. To limit the amount of resources, it is possible to limit the speed of table optimization. The ``tokudb_optimize_throttle`` session variable determines an upper bound on how many fractal tree leaf nodes per second are optimized. The default is 0 (no upper bound) with a valid range of [0,1000000]. For example, to limit the table optimization to 1 leaf node per second, use the following setting:
+
+  .. code-block:: sql
 
    set tokudb_optimize_throttle=1;
 
 * **Optimize a Single Index of a Table**
 
-  To optimize a single index in a table, the ``tokudb_optimize_index_name`` session variable can be set to select the index by name. For example, to optimize the primary key of a table::
+  To optimize a single index in a table, the ``tokudb_optimize_index_name`` session variable can be set to select the index by name. For example, to optimize the primary key of a table:
+
+  .. code-block:: sql
 
    set tokudb_optimize_index_name='primary'; 
    optimize table t;
 
 * **Optimize a Subset of a Fractal Tree Index**
 
-  For patterns where the left side of the tree has many deletions ( a common pattern with increasing id or date values), it may be useful to delete a percentage of the tree. In this case, it is possible to optimize a subset of a fractal tree starting at the left side. The ``tokudb_optimize_index_fraction`` session variable controls the size of the sub tree. Valid values are in the range [0.0,1.0] with default 1.0 (optimize the whole tree). For example, to optimize the leftmost 10% of the primary key::
+  For patterns where the left side of the tree has many deletions ( a common pattern with increasing id or date values), it may be useful to delete a percentage of the tree. In this case, it is possible to optimize a subset of a fractal tree starting at the left side. The ``tokudb_optimize_index_fraction`` session variable controls the size of the sub tree. Valid values are in the range [0.0,1.0] with default 1.0 (optimize the whole tree). For example, to optimize the leftmost 10% of the primary key:
+
+  .. code-block:: sql
 
    set tokudb_optimize_index_name='primary'; 
    set tokudb_optimize_index_fraction=0.1;

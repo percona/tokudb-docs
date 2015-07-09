@@ -1,5 +1,3 @@
-.. highlight:: mysql
-
 .. _using-tokudb:
 
 ============
@@ -34,7 +32,9 @@ Clustering Secondary Indexes
 
 One of the keys to exploiting TokuDB's strength in indexing is to make use of clustering secondary indexes.
 
-To define a secondary index as clustering, simply add the word ``CLUSTERING`` before the key definition. For example::
+To define a secondary index as clustering, simply add the word ``CLUSTERING`` before the key definition. For example:
+
+.. code-block:: sql
 
  CREATE TABLE table (
    column_a INT,
@@ -43,7 +43,9 @@ To define a secondary index as clustering, simply add the word ``CLUSTERING`` be
    PRIMARY KEY index_a (column_a),
    CLUSTERING KEY index_b (column_b)) ENGINE = TokuDB;
 
-In the previous example, the primary table is indexed on *column_a*. Additionally, there is a secondary clustering index (named *index_b*) sorted on *column_b*. Unlike non-clustered indexes, clustering indexes include all the columns of a table and can be used as covering indexes. For example, the following query will run very fast using the clustering *index_b*::
+In the previous example, the primary table is indexed on *column_a*. Additionally, there is a secondary clustering index (named *index_b*) sorted on *column_b*. Unlike non-clustered indexes, clustering indexes include all the columns of a table and can be used as covering indexes. For example, the following query will run very fast using the clustering *index_b*:
+
+.. code-block:: sql
 
  SELECT column_c
    FROM table
@@ -62,14 +64,12 @@ The ``ONLINE`` keyword is not used. Instead, the value of the ``tokudb_create_in
 
 Hot index creation is invoked using the ``CREATE INDEX`` command after setting ``tokudb_create_index_online=on`` as follows:
 
-.. code-block:: mysql
-   :emphasize-lines: 1,5
+.. code-block:: console
 
-   SET tokudb_create_index_online=ON;
- 
+   mysql> SET tokudb_create_index_online=on;
    Query OK, 0 rows affected (0.00 sec)
  
-   CREATE INDEX index ON table (field_name);
+   mysql> CREATE INDEX index ON table (field_name);
 
 Alternatively, using the ``ALTER TABLE`` command for creating an index will create the index offline (with the table unavailable for inserts or queries), regardless of the value of ``tokudb_create_index_online``. The only way to hot create an index is to use the ``CREATE INDEX`` command.
 
@@ -82,7 +82,7 @@ Hot Column Add, Delete, Expand, and Rename (HCADER)
 
 TokuDB enables you to add or delete columns in an existing table, expand char, varchar, varbinary, and integer type columns in an existing table, or rename an existing column in a table with little blocking of other updates and queries. HCADER typically blocks other queries with a table lock for no more than a few seconds. After that initial short-term table locking, the system modifies each row (when adding, deleting, or expanding columns) later, when the row is next brought into main memory from disk. For column rename, all the work is done during the seconds of downtime. On-disk rows need not be modified.
 
-To get good performance from HCADER, observe the following guidelines.
+To get good performance from HCADER, observe the following guidelines:
 
 * The work of altering the table for column addition, deletion, or expansion is performed as subsequent operations touch parts of the Fractal Tree, both in the primary index and secondary indexes.
 
@@ -98,23 +98,29 @@ To get good performance from HCADER, observe the following guidelines.
 
 * Hot column expansion operations are only supported to char, varchar, varbinary, and integer data types. Hot column expansion is not supported if the given column is part of the primary key or any secondary keys.
 
-* Rename only one column per statement. Renaming more than one column will revert to the standard MySQL blocking behavior. The proper syntax is as follows::
+* Rename only one column per statement. Renaming more than one column will revert to the standard MySQL blocking behavior. The proper syntax is as follows:
 
- ALTER TABLE table
-   CHANGE column_old column_new
-   DATA_TYPE REQUIRED_NESS DEFAULT
+  .. code-block:: sql
 
-Here's an example of how that might look::
+   ALTER TABLE table
+     CHANGE column_old column_new
+     DATA_TYPE REQUIRED_NESS DEFAULT
 
- ALTER TABLE table
-   CHANGE column_old column_new 
-   INT(10) NOT NULL;
+  Here's an example of how that might look:
+
+  .. code-block:: sql
+
+   ALTER TABLE table
+     CHANGE column_old column_new 
+     INT(10) NOT NULL;
 
 Notice that all of the column attributes must be specified. ``ALTER TABLE table CHANGE column_old column_new;`` induces a slow, blocking column rename.
 
 * Hot column rename does not support the following data types: ``TIME``, ``ENUM``, ``BLOB``, ``TINYBLOB``, ``MEDIUMBLOB``, ``LONGBLOB``. Renaming columns of these types will revert to the standard MySQL blocking behavior.
 
 * Temporary tables cannot take advantage of HCADER. Temporary tables are typically small anyway, so altering them using the standard method is usually fast.
+
+.. _compress-details:
 
 Compression Details
 -------------------
@@ -127,7 +133,9 @@ Compression in TokuDB occurs on background threads, which means that high compre
 
 The ultimate choice depends on the particulars of how a database is used, and we recommend that users use the default settings unless they have profiled their system with high compression in place.
 
-Compression is set on a per-table basis and is controlled by setting row format during a ``CREATE TABLE`` or ``ALTER TABLE``. For example::
+Compression is set on a per-table basis and is controlled by setting row format during a ``CREATE TABLE`` or ``ALTER TABLE``. For example:
+
+.. code-block:: sql
 
  CREATE TABLE table (
    column_a INT NOT NULL PRIMARY KEY,
@@ -157,7 +165,9 @@ In addition, you can choose a compression library directly, which will override 
 Changing Compression of a Table
 -------------------------------
 
-Modify the compression used on a particular table with the following command::
+Modify the compression used on a particular table with the following command:
+
+.. code-block:: sql
 
  ALTER TABLE table
    ROW_FORMAT=row_format;
@@ -221,7 +231,7 @@ When using any transaction-safe database, it is essential that you understand th
 
 For most configurations you must disable the write cache on your disk drives. On ATA/SATA drives, the following command should disable the write cache:
 
-.. code-block:: bash
+.. code-block:: console
 
  $ hdparm -W0 /dev/hda
 
@@ -285,13 +295,17 @@ Hot Backup 7.5.5 and later
 Configuration
 ^^^^^^^^^^^^^
 
-Before using the Hot Backup plugin, the plugin must be installed. To install it, execute the following command::
+Before using the Hot Backup plugin, the plugin must be installed. To install it, execute the following command:
 
- install plugin tokudb_backup soname 'tokudb_backup.so';
+.. code-block:: console
 
-Once the plugin is installed, it is then possible to execute a backup. The destination directory where the backups will be located must be empty, otherwise a failure will occur. To back up a database, the user sets the ``tokudb_backup_dir`` variable to an empty directory as follows::
+ mysql> install plugin tokudb_backup soname 'tokudb_backup.so';
 
- set tokudb_backup_dir='/path_to_empty_directory';
+Once the plugin is installed, it is then possible to execute a backup. The destination directory where the backups will be located must be empty, otherwise a failure will occur. To back up a database, the user sets the ``tokudb_backup_dir`` variable to an empty directory as follows:
+
+.. code-block:: console
+
+ mysql> set tokudb_backup_dir='/path_to_empty_directory';
 
 As soon as the variable is set, the backup will begin.
 
@@ -302,19 +316,21 @@ Hot backup updates the *processlist* state while the backup is in progress. User
 
 There are two variables that can be used to capture errors from Hot Backup. They are ``@@tokudb_backup_last_error`` and ``@@tokudb_backup_last_error_string``. When Hot Backup encounters an error, these will report on the error number and the error string respectively. For example, the following output shows these parameters following an attempted backup to a directory that was not empty:
 
-.. code-block:: mysql
-   :emphasize-lines: 1,3,9,11
+.. code-block:: console
 
  mysql> set tokudb_backup_dir='/tmp/backupdir';
  ERROR 1231 (42000): Variable 'tokudb_backup_dir' can't be set to the value of '/tmp/backupdir'
+
  mysql> select @@tokudb_backup_last_error;
  +----------------------------+
  | @@tokudb_backup_last_error |
  +----------------------------+
  |                         17 |
  +----------------------------+
+ 
  mysql> @@tokudb_backup_last_error_string;
  ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@@tokudb_backup_last_error_string' at line 1
+ 
  mysql> select @@tokudb_backup_last_error_string;
  +---------------------------------------------------+
  | @@tokudb_backup_last_error_string                 |
@@ -325,11 +341,10 @@ There are two variables that can be used to capture errors from Hot Backup. They
 Optional Settings
 ^^^^^^^^^^^^^^^^^
 
-tokudb_backup_allowed_prefix
+``tokudb_backup_allowed_prefix``
   This system-level variable restricts the location of the destination directory where the backups can be located. Attempts to backup to a location outside of the directory this variable points to or its children will result in an error. The default is null, backups have no restricted locations. This read-only variable can be set in the :file:`my.cnf` config file and displayed with the ``show variables`` command.
 
-  .. code-block:: mysql
-     :emphasize-lines: 1
+  .. code-block:: console
 
    mysql> show variables where variable_name='tokudb_backup_allowed_prefix';
    +------------------------------+-----------+
@@ -338,26 +353,27 @@ tokudb_backup_allowed_prefix
    | tokudb_backup_allowed_prefix | /dumpdir  |
    +------------------------------+-----------+
 
-tokudb_backup_throttle
+``tokudb_backup_throttle``
   This session-level variable throttles the write rate in bytes per second of the backup to prevent Hot Backup from crowding out other jobs in the system. The default and max value is 18446744073709551615.
 
-  .. code-block:: mysql
-     :emphasize-lines: 1
+  .. code-block:: console
 
    mysql> set tokudb_backup_throttle=1000000;
 
-tokudb_backup_dir
+``tokudb_backup_dir``
   When set, this session-level variable serves two purposes, to point to the destination directory where the backups will be dumped and to kick off the backup as soon as it's set.
 
-tokudb_backup_last_error
+``tokudb_backup_last_error``
   This session variable contains the error number from the last backup. 0 indicates success.
 
-tokudb_backup_last_error_string
+``tokudb_backup_last_error_string``
   This session variable contains the error string from the last backup.
 
 Hot Backup Prior to 7.5.5
 *************************
 
-There is no requirement to install a plugin prior to 7.5.5. Hot Backup is compiled into the executable. To run Hot Backup, the destination directory must exist, be writable and empty. Once this directory is created, the backup can be run using the following command::
+There is no requirement to install a plugin prior to 7.5.5. Hot Backup is compiled into the executable. To run Hot Backup, the destination directory must exist, be writable and empty. Once this directory is created, the backup can be run using the following command:
 
- backup to '/path_to_empty_directory';
+.. code-block:: console
+
+ mysql> backup to '/path_to_empty_directory';
