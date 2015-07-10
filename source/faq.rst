@@ -126,23 +126,23 @@ Backup
 
 .. rubric:: References
 
- The MySQL 5.5 reference manual describes several backup methods and strategies. In addition, we recommend reading the backup and recovery chapter in the following book:
+The MySQL 5.5 reference manual describes several backup methods and strategies. In addition, we recommend reading the backup and recovery chapter in the following book:
 
- *High Performance MySQL, 2nd Edition*, by Baron Schwartz, Peter Zaitsev, Vadim Tkachenko, Jeremy D. Zawodny, Arjen Lentz and Derek J. Balling, Copyright 2008, O'Reilly Media.
+*High Performance MySQL, 2nd Edition*, by Baron Schwartz, Peter Zaitsev, Vadim Tkachenko, Jeremy D. Zawodny, Arjen Lentz and Derek J. Balling, Copyright 2008, O'Reilly Media.
 
 .. rubric:: Cold Backup
 
- When MySQL is shut down, a copy of the MySQL data directory, the TokuDB data directory, and the TokuDB log directory can be made. In the simplest configuration, the TokuDB files are stored in the MySQL data directory with all of other MySQL files. One merely has to back up this directory.
+When MySQL is shut down, a copy of the MySQL data directory, the TokuDB data directory, and the TokuDB log directory can be made. In the simplest configuration, the TokuDB files are stored in the MySQL data directory with all of other MySQL files. One merely has to back up this directory.
 
 .. rubric:: Hot Backup using mylvmbackup
 
- The ``mylvmbackup`` utility, located on `Launchpad <https://launchpad.net/>`_, works with TokuDB. It does all of the magic required to get consistent copies of all of the MySQL tables, including MyISAM tables, InnoDB tables, etc., creates the LVM snapshots, and backs up the snapshots.
+The ``mylvmbackup`` utility, located on `Launchpad <https://launchpad.net/>`_, works with TokuDB. It does all of the magic required to get consistent copies of all of the MySQL tables, including MyISAM tables, InnoDB tables, etc., creates the LVM snapshots, and backs up the snapshots.
 
 .. rubric:: Logical Snapshots
 
- A logical snapshot of the databases uses a SQL statements to retrieve table rows and restore them. When used within a transaction, a consistent snapshot of the database can be taken. This method can be used to export tables from one database server and import them into another server.
+A logical snapshot of the databases uses a SQL statements to retrieve table rows and restore them. When used within a transaction, a consistent snapshot of the database can be taken. This method can be used to export tables from one database server and import them into another server.
 
- The ``SELECT INTO OUTFILE`` statement is used to take a logical snapshot of a database. The ``LOAD DATA INFILE`` statement is used to load the table data. Please see the MySQL 5.5 reference manual for details.
+The ``SELECT INTO OUTFILE`` statement is used to take a logical snapshot of a database. The ``LOAD DATA INFILE`` statement is used to load the table data. Please see the MySQL 5.5 reference manual for details.
 
 .. note:: Please do not use ``mysqlhotcopy`` to back up TokuDB tables. This script is incompatible with TokuDB.
 
