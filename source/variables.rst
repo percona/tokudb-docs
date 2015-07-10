@@ -244,6 +244,8 @@ MySQL Server Variables
 
   This variable specifies the directory where the TokuDB log files are stored. The default location is the MySQL data directory. Configuring a separate log directory is somewhat involved. Please contact Tokutek support for more details.
 
+.. _tokudb-tmp-dir:
+
 ``tokudb_tmp_dir``
 
   This variable specifies the directory where the TokuDB bulk loader stores temporary files. The bulk loader can create large temporary files while it is loading a table, so putting these temporary files on a disk separate from the data directory can be useful.

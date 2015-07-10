@@ -43,6 +43,8 @@ In addition, when using the ``REPLACE INTO`` or ``INSERT IGNORE`` on tables with
 
 **MySQL 5.5 and MariaDB 5.5 does not support hot combined adding/dropping of indexes**: Multiple indexes may be added hot or dropped hot, but the operations cannot be combined in a single DDL statement.
 
+.. _lock-visual:
+
 Lock Visualization in TokuDB
 ----------------------------
 
