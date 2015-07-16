@@ -4,7 +4,7 @@
 Fractal Tree Indexing
 =====================
 
-Fractal Tree indexing is the technology behind TokuDB and TokuMX, protected by multiple patents. It enhances the traditional B-tree data structure used in other database engines, and optimizes performance for modern hardware and data sizes.
+Fractal Tree indexing is the technology behind TokuDB and TokuMX, protected by multiple patents. It enhances the traditional B-tree data structure used in other database engines, and optimizes performance for modern hardware and data sets.
 
 Background
 ----------
@@ -16,7 +16,7 @@ It would be too expensive to increase RAM on par with growing storage needs for 
 Buffers
 -------
 
-Like a B-tree, a Fractal Tree index is a tree data structure. However, besides pivots, each internal node in a Fractal Tree index also contains buffers. These buffers are used to temporarily store insertions in main memory. When a buffer is full, it is flushed to children nodes. This ensures that an I/O operation performs a lot of useful work.
+Like a B-tree, a Fractal Tree index is a tree data structure. However, besides pivots, each internal node in a Fractal Tree index also contains buffers. These buffers are used to temporarily store insertions. When a buffer is full, it is flushed to children nodes. This ensures that an I/O operation performs a lot of useful work, instead of just a small write per I/O.
 
 Reading data is not affected by buffers. Querying a database with the Fractal Tree index data structure involves the same algorithmic complexity as in the case of a B-tree. And there is no data loss, because queries follow the path from root to leaf passing through all messages (insertions, deletions, and updates) in buffers. So a query will know the current state of data even if changes have not yet been propagated to corresponding leaves.
 
