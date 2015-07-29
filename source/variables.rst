@@ -117,7 +117,7 @@ More information is available in :ref:`Known Issues <known-issues>`_.
 
 ``tokudb_analyze_time``
 
-  This session variable controls the number of seconds an analyze operation will spend on each index when calculating cardinality. Cardinality is shown by executing
+  This session variable controls the number of seconds an analyze operation will spend on each index when calculating cardinality. Cardinality is shown by executing the following command:
 
   .. code-block:: sql
 
