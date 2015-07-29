@@ -7,6 +7,7 @@ TokuDB Variables
 Like all storage engines, TokuDB has variables to tune performance and control behavior. Fractal Tree algorithms are designed for near optimal performance and TokuDB's default settings should work well in most situations, eliminating the need for complex and time consuming tuning in most cases.
 
 .. contents::
+  :local:
 
 Client Session Variables
 ------------------------
