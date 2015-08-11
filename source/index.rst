@@ -35,6 +35,7 @@ For more information on installing and using TokuDB for MySQL and MariaDB, click
    using-tokudb
    quickstart
    installation
+   hot-backup
    faq
    variables
    troubleshooting
