@@ -196,6 +196,17 @@ More information is available in :ref:`Known Issues <known-issues>`_.
 
   When enabled, this session level variable serves two purposes, to point to the destination directory where the backups will be dumped and to kick off the backup as soon as it is set.
 
+
+``tokudb_backup_exclude``
+ 
+ *Supported since 7.5.5*
+
+ Use this variable to set a regular expression that defines source files excluded from backup. For example, to exclude all `lost+found` directories, use the following command:
+
+ .. code-block:: console
+
+   mysql> set tokudb_backup_exclude='/lost\\+found($|/)';
+
 ``tokudb_backup_last_error``
 
   *Supported since 7.5.5*

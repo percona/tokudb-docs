@@ -84,18 +84,26 @@ Optional Settings
    | tokudb_backup_allowed_prefix | /dumpdir  |
    +------------------------------+-----------+
 
-``tokudb_backup_throttle``
-  This session-level variable throttles the write rate in bytes per second of the backup to prevent Hot Backup from crowding out other jobs in the system. The default and max value is 18446744073709551615.
-
-  .. code-block:: console
-
-   mysql> set tokudb_backup_throttle=1000000;
-
 ``tokudb_backup_dir``
   When set, this session-level variable serves two purposes, to point to the destination directory where the backups will be dumped and to kick off the backup as soon as it's set.
+
+``tokudb_backup_exclude``
+ Use this variable to set a regular expression that defines source files excluded from backup. For example, to exclude all `lost+found` directories, use the following command:
+
+ .. code-block:: console
+
+   mysql> set tokudb_backup_exclude='/lost\\+found($|/)';
 
 ``tokudb_backup_last_error``
   This session variable contains the error number from the last backup. 0 indicates success.
 
 ``tokudb_backup_last_error_string``
   This session variable contains the error string from the last backup.
+
+
+``tokudb_backup_throttle``
+  This session-level variable throttles the write rate in bytes per second of the backup to prevent Hot Backup from crowding out other jobs in the system. The default and max value is 18446744073709551615.
+
+  .. code-block:: console
+
+   mysql> set tokudb_backup_throttle=1000000;
