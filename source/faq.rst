@@ -15,7 +15,7 @@ Transactional Operations
 
 **What transactional operations does TokuDB support?**
 
-TokuDB supports ``BEGIN TRANSACTION``, ``END TRANSACTION``, ``COMMIT``,`` ROLLBACK``, ``SAVEPOINT``, and ``RELEASE SAVEPOINT``.
+TokuDB supports ``BEGIN TRANSACTION``, ``END TRANSACTION``, ``COMMIT``,``ROLLBACK``, ``SAVEPOINT``, and ``RELEASE SAVEPOINT``.
 
 TokuDB and the File System
 --------------------------

@@ -4,7 +4,7 @@
 Using TokuDB
 ============
 
- .. caution:: Do not move or modify any TokuDB files. You will break the database, and need to recover the database from a backup.
+ .. warning:: Do not move or modify any TokuDB files. You will break the database, and need to recover the database from a backup.
  
 Fast Insertions and Richer Indexes
 ----------------------------------

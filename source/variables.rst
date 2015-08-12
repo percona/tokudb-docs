@@ -66,6 +66,8 @@ More information is available in :ref:`Known Issues <known-issues>`_.
 
   .. note:: If this variable is set to off, fast bulk loading is turned off as well.
 
+.. _tokudb_create_index_online:
+
 ``tokudb_create_index_online``
 
   This variable controls whether indexes created with the ``CREATE INDEX`` command are hot (if enabled), or offline (if disabled). Hot index creation means that the table is available for inserts and queries while the index is being created. Offline index creation means that the table is not available for inserts and queries while the index is being created.

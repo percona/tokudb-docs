@@ -8,6 +8,8 @@ Troubleshooting
    :local:
    :depth: 1
 
+.. _known-issues:
+
 Known Issues
 ------------
 
@@ -1422,10 +1424,10 @@ Number of buffers decompressed by a prefetch thread.
  Number of leaf nodes destroyed.
 
 ``TOKUDB_LEAF_NODES_FLUSHED_CHECKPOINT_BYTES``
-Number of bytes of leaf nodes flushed to disk for checkpoint.
+ Number of bytes of leaf nodes flushed to disk for checkpoint.
 
 ``TOKUDB_LEAF_NODES_FLUSHED_CHECKPOINT``
-Number of leaf nodes flushed to disk for checkpoint.
+ Number of leaf nodes flushed to disk for checkpoint.
 
 ``TOKUDB_LEAF_NODES_FLUSHED_CHECKPOINT_SECONDS``
  Number of seconds waiting for IO when writing leaf nodes flushed to disk for checkpoint.
@@ -1622,7 +1624,7 @@ Number of leaf nodes flushed to disk for checkpoint.
  Number of pivot nodes fetched for queries.
 
 ``TOKUDB_PIVOTS_FETCHED_FOR_QUERY_SECONDS``
-Number of seconds waiting for IO when fetching pivot nodes for queries.
+ Number of seconds waiting for IO when fetching pivot nodes for queries.
 
 ``TOKUDB_PIVOTS_FETCHED_FOR_WRITE_BYTES``
  Number of bytes of pivot nodes fetched for writes.
@@ -1658,7 +1660,7 @@ Number of seconds waiting for IO when fetching pivot nodes for queries.
  Number of times the root split during promotion.
 
 ``TOKUDB_PROMOTION_STOPPED_AFTER_LOCKING_CHILD``
-Number of times a message stopped before a child which had been locked.
+ Number of times a message stopped before a child which had been locked.
 
 ``TOKUDB_PROMOTION_STOPPED_AT_HEIGHT_1``
  Number of times a message stopped because it had reached height 1.
