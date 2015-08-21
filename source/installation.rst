@@ -4,7 +4,7 @@
 Installation
 ============
 
-Tokutek provides binary versions of MySQL and MariaDB with a few minor changes to support TokuDB. The TokuDB, MyISAM and InnoDB storage engines are included in the distribution files.
+Percona provides binary versions of MySQL and MariaDB with a few minor changes to support TokuDB. The TokuDB, MyISAM and InnoDB storage engines are included in the distribution files.
 
 The installation of MySQL from a tarball release file is described in the `MySQL 5.5 reference manual <http://dev.mysql.com/doc/refman/5.5/en/binary-installation.html>`_. The following instructions are based on it with information specific to TokuDB.
 

@@ -4,7 +4,7 @@
 TokuDB Plugins
 ==============
 
-Plugins enable you to extend the functionality of TokuDB.
+Plugins enable you to extend the functionality of the TokuDB storage engine.
 
 .. contents::
   :local:

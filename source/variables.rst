@@ -234,7 +234,7 @@ MySQL Server Variables
 
 ``tokudb_cache_size``
 
-  This variable configures the size in bytes of the TokuDB cache table. The default cache table size is 1/2 of physical memory. Tokutek highly recommends using the default setting if using buffered IO, if using direct IO then consider setting this parameter to 80% of available memory.
+  This variable configures the size in bytes of the TokuDB cache table. The default cache table size is 1/2 of physical memory. Percona highly recommends using the default setting if using buffered IO, if using direct IO then consider setting this parameter to 80% of available memory.
 
   Consider decreasing ``tokudb_cache_size`` if excessive swapping is causing performance problems. Swapping may occur when running multiple mysql server instances or if other running applications use large amounts of physical memory.
 
@@ -256,7 +256,7 @@ MySQL Server Variables
 
 ``tokudb_log_dir``
 
-  This variable specifies the directory where the TokuDB log files are stored. The default location is the MySQL data directory. Configuring a separate log directory is somewhat involved. Please contact Tokutek support for more details.
+  This variable specifies the directory where the TokuDB log files are stored. The default location is the MySQL data directory. Configuring a separate log directory is somewhat involved. Please contact Percona support for more details.
 
 .. _tokudb-tmp-dir:
 

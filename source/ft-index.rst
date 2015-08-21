@@ -23,14 +23,3 @@ Reading data is not affected by buffers in terms of data consistency. Querying a
 Each message is stamped with a unique message sequence number (MSN) when it is stored in a non-leaf node message buffer. The MSN is unique within each fractal tree.  The MSN maintains the order of messages and ensures that messages are only applied once to leaf nodes when the leaf node is updated by messages buffered by its parent nodes.
 
 Buffers also get serialized to disk, so messages in internal nodes will not be lost in case of a crash or power outage. If a write happened after a checkpoint and before a crash, then recovery will replay the operation from the log.
-
-http://www.tokutek.com/2013/07/tokumx-fractal-treer-indexes-what-are-they/
-
-http://www.tokutek.com/wp-content/uploads/2012/11/Fractal-Tree-Technology-and-the-Art-of-Indexing.pdf
-
-http://cdn.oreillystatic.com/en/assets/1/event/36/How%20TokuDB%20Fractal%20Tree%20Databases%20Work%20Presentation.pdf
-
-http://www.slideshare.net/mongodb/20121024-mongodbboston
-
-https://en.wikipedia.org/wiki/Fractal_tree_index
-https://en.wikipedia.org/wiki/B-tree
