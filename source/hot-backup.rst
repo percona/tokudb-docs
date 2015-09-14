@@ -172,3 +172,44 @@ Percona TokuBackup uses two variables to capture errors. They are ``@@tokudb_bac
  | tokudb backup couldn't create needed directories. |
  +---------------------------------------------------+
 
+<<<<<<< HEAD
+=======
+Optional Settings
+-----------------
+
+``tokudb_backup_allowed_prefix``
+  This system-level variable restricts the location of the destination directory where the backups can be located. Attempts to backup to a location outside of the directory this variable points to or its children will result in an error. The default is null, backups have no restricted locations. This read-only variable can be set in the :file:`my.cnf` config file and displayed with the ``show variables`` command.
+
+  .. code-block:: console
+
+   mysql> show variables where variable_name='tokudb_backup_allowed_prefix';
+   +------------------------------+-----------+
+   | Variable_name                | Value     |
+   +------------------------------+-----------+
+   | tokudb_backup_allowed_prefix | /dumpdir  |
+   +------------------------------+-----------+
+
+``tokudb_backup_dir``
+  When set, this session-level variable serves two purposes, to point to the destination directory where the backups will be dumped and to kick off the backup as soon as it's set.
+
+``tokudb_backup_exclude``
+ Use this variable to set a regular expression that defines source files excluded from backup. For example, to exclude all `lost+found` directories, use the following command:
+
+ .. code-block:: console
+
+   mysql> set tokudb_backup_exclude='/lost\\+found($|/)';
+
+``tokudb_backup_last_error``
+  This session variable contains the error number from the last backup. 0 indicates success.
+
+``tokudb_backup_last_error_string``
+  This session variable contains the error string from the last backup.
+
+
+``tokudb_backup_throttle``
+  This session-level variable throttles the write rate in bytes per second of the backup to prevent Hot Backup from crowding out other jobs in the system. The default and max value is 18446744073709551615.
+
+  .. code-block:: console
+
+   mysql> set tokudb_backup_throttle=1000000;
+>>>>>>> master

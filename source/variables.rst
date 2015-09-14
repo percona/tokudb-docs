@@ -7,6 +7,7 @@ TokuDB Variables
 Like all storage engines, TokuDB has variables to tune performance and control behavior. Fractal Tree algorithms are designed for near optimal performance and TokuDB's default settings should work well in most situations, eliminating the need for complex and time consuming tuning in most cases.
 
 .. contents::
+  :local:
 
 Client Session Variables
 ------------------------
@@ -64,6 +65,8 @@ More information is available in :ref:`Known Issues <known-issues>`_.
   However, if multiple transactions try to do concurrent operations on an empty table, all but one transaction will be locked out. Disabling ``tokudb_prelock_empty`` optimizes for this multi-transaction case by turning off preemptive prelocking.
 
   .. note:: If this variable is set to off, fast bulk loading is turned off as well.
+
+.. _tokudb_create_index_online:
 
 ``tokudb_create_index_online``
 
@@ -193,6 +196,17 @@ More information is available in :ref:`Known Issues <known-issues>`_.
 
   When enabled, this session level variable serves two purposes, to point to the destination directory where the backups will be dumped and to kick off the backup as soon as it is set.
 
+
+``tokudb_backup_exclude``
+ 
+ *Supported since 7.5.5*
+
+ Use this variable to set a regular expression that defines source files excluded from backup. For example, to exclude all `lost+found` directories, use the following command:
+
+ .. code-block:: console
+
+   mysql> set tokudb_backup_exclude='/lost\\+found($|/)';
+
 ``tokudb_backup_last_error``
 
   *Supported since 7.5.5*
@@ -220,7 +234,7 @@ MySQL Server Variables
 
 ``tokudb_cache_size``
 
-  This variable configures the size in bytes of the TokuDB cache table. The default cache table size is 1/2 of physical memory. Tokutek highly recommends using the default setting if using buffered IO, if using direct IO then consider setting this parameter to 80% of available memory.
+  This variable configures the size in bytes of the TokuDB cache table. The default cache table size is 1/2 of physical memory. Percona highly recommends using the default setting if using buffered IO, if using direct IO then consider setting this parameter to 80% of available memory.
 
   Consider decreasing ``tokudb_cache_size`` if excessive swapping is causing performance problems. Swapping may occur when running multiple mysql server instances or if other running applications use large amounts of physical memory.
 
@@ -242,7 +256,7 @@ MySQL Server Variables
 
 ``tokudb_log_dir``
 
-  This variable specifies the directory where the TokuDB log files are stored. The default location is the MySQL data directory. Configuring a separate log directory is somewhat involved. Please contact Tokutek support for more details.
+  This variable specifies the directory where the TokuDB log files are stored. The default location is the MySQL data directory. Configuring a separate log directory is somewhat involved. Please contact Percona support for more details.
 
 .. _tokudb-tmp-dir:
 

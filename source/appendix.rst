@@ -169,13 +169,13 @@ Requirements for Fast Updates
 Compiling MySQL from Source
 ---------------------------
 
-It is not necessary to build MySQL and the TokuDB for MySQL® handlerton from source, but if you want to this section tells you how to do so and how to link with the Tokutek Fractal Tree® Library.
+It is not necessary to build MySQL and the TokuDB for MySQL® handlerton from source, but if you want to this section tells you how to do so and how to link with the Percona Fractal Tree® Library.
 
-Please note that Tokutek made some changes to the MySQL source that are required to either fix bugs or aid in performance, so if you are compiling from source you must use the Tokutek version of MySQL that is based on the MySQL 5.5.30 source.
+Please note that Percona made some changes to the MySQL source that are required to either fix bugs or aid in performance, so if you are compiling from source you must use the Percona version of MySQL that is based on the MySQL 5.5.30 source.
 
 The instructions in this section have been written with the assumption that you know what you are doing and are familiar with building the MySQL Community Server.
 
-After executing these instructions, follow the instructions in the Tokutek Quick Start Guide to install and start the server.
+After executing these instructions, follow the instructions in the Percona Quick Start Guide to install and start the server.
 
 System and Hardware Requirements
 ********************************
@@ -211,7 +211,7 @@ System and Hardware Requirements
 Download and verify files
 *************************
 
-Download and verify the following files from the Tokutek web site and put them in the build directory:
+Download and verify the following files from the Percona web site and put them in the build directory:
 
 * ``mysql-5.5.30-tokudb-7.1.0-0-src.tar.gz``
 * ``mysql-5.5.30-tokudb-7.1.0-0-src.tar.gz.md5``

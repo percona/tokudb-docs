@@ -15,7 +15,7 @@ Transactional Operations
 
 **What transactional operations does TokuDB support?**
 
-TokuDB supports ``BEGIN TRANSACTION``, ``END TRANSACTION``, ``COMMIT``,`` ROLLBACK``, ``SAVEPOINT``, and ``RELEASE SAVEPOINT``.
+TokuDB supports ``BEGIN TRANSACTION``, ``END TRANSACTION``, ``COMMIT``,``ROLLBACK``, ``SAVEPOINT``, and ``RELEASE SAVEPOINT``.
 
 TokuDB and the File System
 --------------------------
@@ -216,7 +216,7 @@ Using MySQL Patches with TokuDB
 
 **Can I use MySQL source code patches with TokuDB?**
 
-Yes, but you need to apply Tokutek patches as well as your patches to MySQL to build a binary that works with the Tokutek Fractal Tree library. Tokutek provides a patched version of MySQL as well.
+Yes, but you need to apply Percona patches as well as your patches to MySQL to build a binary that works with the Percona Fractal Tree library. Percona provides a patched version of MySQL as well.
 
 Truncate Table vs Delete from Table
 -----------------------------------
