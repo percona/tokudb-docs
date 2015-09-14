@@ -12,12 +12,57 @@ Percona TokuBackup is an open-source hot backup utility for MySQL servers runnin
 Installing From Binaries
 ------------------------
 
-.. QUESTION: It will not be available as a plugin any more?
+TokuBackup is included with Percona Server 5.6 and later versions. Installation can be performed with the ``ps_tokudb_admin`` script.
+
+To install Percona TokuBackup:
+
+1. Run ``ps_tokudb_admin --enable-backup`` to add the ``preload-hotbackup`` option into **[mysqld_safe]** section of :file:`my.cnf`.
+
+  .. code-block:: console
+    
+    $ sudo ps_tokudb_admin --enable-backup
+    Checking SELinux status...
+    INFO: SELinux is disabled.
+
+    Checking if preload-hotbackup option is already set in config file...
+    INFO: Option preload-hotbackup is not set in the config file.
+
+    Checking TokuBackup plugin status...
+    INFO: TokuBackup plugin is not installed.
+
+    Adding preload-hotbackup option into /etc/my.cnf
+    INFO: Successfully added preload-hotbackup option into /etc/my.cnf
+    PLEASE RESTART MYSQL SERVICE AND RUN THIS SCRIPT AGAIN TO FINISH INSTALLATION!
+
+2. Restart mysql service
+
+  .. code-block:: console
+
+    $ sudo systemctl restart mysql
+
+3. Run ``ps_tokudb_admin --enable-backup`` again to finish installation of TokuBackup plugin
+
+  .. code-block:: console
+    
+    $ sudo ps_tokudb_admin --enable-backup                                     Checking SELinux status...
+    INFO: SELinux is disabled.
+
+    Checking if preload-hotbackup option is already set in config file...
+    INFO: Option preload-hotbackup is set in the config file.
+
+    Checking TokuBackup plugin status...
+    INFO: TokuBackup plugin is not installed.
+
+    Checking if Percona Server is running with libHotBackup.so preloaded...
+    INFO: Percona Server is running with libHotBackup.so preloaded.
+
+    Installing TokuBackup plugin...
+    INFO: Successfully installed TokuBackup plugin.
 
 Compiling and Installing From Source Code
 -----------------------------------------
 
-.. TBD
+Since TokuBackup is part of Percona Server, refer to corresponding documentation for building Percona Server at `https://www.percona.com/doc/percona-server/5.6/installation.html`_
 
 Making a Backup
 ---------------
@@ -39,7 +84,21 @@ You can change the backup directory by setting the ``tokudb_backup_dir`` variabl
 Restoring From Backup
 ---------------------
 
-.. TBD
+Percona TokuBackup does not have any functionality for restoring a backup. You can use :command:`rsync` or :command:`cp` to restore the files. You should check that the restored files have the correct ownership and permissions.
+
+.. note:: Make sure that the datadir is empty and that MySQL server is shut down before restoring from backup. You can’t restore to a datadir of a running mysqld instance (except when importing a partial backup).
+
+The following example shows how you might use the :commad:`rsync` command to restore the backup:
+
+.. code-block:: console
+
+  $ rsync -avrP /data/backup/ /var/lib/mysql/
+
+Since attributes of files are preserved, in most cases you will need to change their ownership to *mysql* before starting the database server. Otherwise, the files will be owned by the user who created the backup.
+
+.. code-block:: console
+
+  $ chown -R mysql:mysql /var/lib/mysql
 
 Advanced Configuration
 ----------------------
