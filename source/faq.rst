@@ -36,6 +36,8 @@ The ``tokudb_file_map`` plugin lists all Fractal Tree Indexes and their correspo
  | ./test/tmc-status        | ./_test_tmc_status_8_14.tokudb        | test          | tmc         | status                 |
  +--------------------------+---------------------------------------+---------------+-------------+------------------------+
 
+.. _full-disks:
+
 Full Disks
 ----------
 

@@ -42,4 +42,4 @@ tokudb_trx
 
 This plugin exposes the ``INFORMATION_SCHEMA.tokudb_trx`` table, which maps TokuDB transaction identifiers to MySQL client identifiers. This mapping enables you to associate a TokuDB transaction with a MySQL client operation.
 
-For more information about lock visualization, see :ref:`lock_visual`.
+For more information about lock visualization, see :ref:`lock-visual`.

@@ -9,6 +9,10 @@
  Percona TokuDB - Documentation
 ==================================
 
+.. warning:: 
+
+  This documentation is considered legacy documentation and it has been deprecated once the TokuDB has been integrated into |Percona Server|. You can access the updated documentation in the |Percona Server| `5.6 <https://www.percona.com/doc/percona-server/5.6/tokudb/tokudb_intro.html>`_ and |Percona Server| `5.7 <https://www.percona.com/doc/percona-server/5.7/tokudb/tokudb_intro.html>`_. Most of the pages here will automatically redirect you to the newer version of the documentation. 
+
 TokuDB® is a highly scalable, zero-maintenance downtime MySQL storage engine that delivers indexing-based query acceleration, improved replication performance, unparalleled compression, and live schema modification. TokuDB is a drop-in storage engine requiring no changes to MySQL or MariaDB applications or code and is fully ACID and MVCC compliant.
 
 Additional features unique to TokuDB include:
@@ -35,11 +39,15 @@ For more information on installing and using TokuDB for MySQL and MariaDB, click
    using-tokudb
    quickstart
    installation
-   faq
    variables
+   plugins
+   ft-index
+   faq
    troubleshooting
    appendix
    release-notes
+   trademark-policy
+   copyright
 
 Getting the Most from TokuDB
 ----------------------------

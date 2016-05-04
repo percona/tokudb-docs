@@ -45,7 +45,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Percona TokuDB documentation'
-copyright = u'Percona LLC and/or its affiliates 2014-2015'
+copyright = u'Percona LLC and/or its affiliates 2014-2016'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

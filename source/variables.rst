@@ -56,7 +56,7 @@ Client Session Variables
 
   If a ``load data infile`` statement fails with the error message ``ERROR 1030 (HY000): Got error 1`` from storage engine, then there may not be enough disk space for the optimized loader, so disable ``tokudb_prelock_empty`` and try again.
 
-More information is available in :ref:`Known Issues <known-issues>`_.
+More information is available in :ref:`Known Issues <known-issues>`.
 
 ``tokudb_prelock_empty``
 
@@ -82,7 +82,7 @@ More information is available in :ref:`Known Issues <known-issues>`_.
 
   .. code-block:: sql
 
-   ALTER TABLE table
+     ALTER TABLE table
      ADD COLUMN column_a INT, 
      DROP COLUMN column_b;
 
@@ -90,7 +90,7 @@ More information is available in :ref:`Known Issues <known-issues>`_.
 
   .. code-block:: none
 
-   ERROR 1112 (42000): Table 'test_slow' uses an extension that doesn't exist in this MySQL version
+     ERROR 1112 (42000): Table 'test_slow' uses an extension that doesn't exist in this MySQL version
 
 ``tokudb_block_size``
 
@@ -116,7 +116,7 @@ More information is available in :ref:`Known Issues <known-issues>`_.
 
 ``tokudb_row_format``
 
-  This session variable controls the default compression algorithm used to compress data when no row format is specified in the ``CREATE TABLE`` command. See :ref:`Compression Details <compress-details>`_.
+  This session variable controls the default compression algorithm used to compress data when no row format is specified in the ``CREATE TABLE`` command. See :ref:`Compression Details <compress-details>`.
 
 ``tokudb_analyze_time``
 
