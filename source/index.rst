@@ -29,7 +29,7 @@ Additional features unique to TokuDB include:
   
   * Hot column addition, deletion, expansion, and rename - TokuDB tables support insertions, deletions and queries without down-time when an alter table adds, deletes, expands, or renames columns
 
-* On-line Backup (Enterprise Edition)
+* On-line Backup
 
 For more information on installing and using TokuDB for MySQL and MariaDB, click on the following links:
 
@@ -62,7 +62,7 @@ Getting the Most from TokuDB
 
 **Hot Column Addition, Deletion, Expansion and Rename**: TokuDB allows the addition of new columns to an existing table, the deletion of existing columns from an existing table, the expansion of char, varchar, varbinary, and integer type columns in an existing table, and the renaming of an existing column while inserts and queries are being performed on that table.
 
-**Online (Hot) Backup**: The TokuDB Enterprise Edition can create backups of online database servers without downtime.
+**Online (Hot) Backup**: TokuDB can create backups of online database servers without downtime.
 
 In practice, slow indexing often leads users to choose a smaller number of sub-optimal indexes in order to keep up with incoming data rates. These sub-optimal indexes result in disproportionately slower queries, since the difference in speed between a query with an index and the same query when no index is available can be many orders of magnitude. Thus, fast indexing means fast queries.
 

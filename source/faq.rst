@@ -94,15 +94,13 @@ Backup
 
 **How do I back up a system with TokuDB tables?**
 
-*Enterprise Edition*
-
-  The Enterprise Edition of TokuDB is capable of performing online backups. To perform a backup, execute ``backup to '/path/to/backup';``. This will create backup of the server and return when complete. The backup can be used by another server using a copy of the binaries on the source server. You can view the progress of the backup by executing ``show processlist;``. TokuDB enterprise backup produces a copy of your running MySQL server that is consistent at the end time of the backup process. The thread copying files from source to destination can be throttled by setting the ``tokudb_backup_throttle`` server variable.
+  TokuDB is capable of performing online backups. To perform a backup, execute ``backup to '/path/to/backup';``. This will create backup of the server and return when complete. The backup can be used by another server using a copy of the binaries on the source server. You can view the progress of the backup by executing ``show processlist;``. TokuDB backup produces a copy of your running MySQL server that is consistent at the end time of the backup process. The thread copying files from source to destination can be throttled by setting the ``tokudb_backup_throttle`` server variable.
 
   The following conditions apply:
 
-  * Currently, enterprise backup only supports tables using the TokuDB storage engine and the MyISAM tables in the mysql database. Full support for InnoDB and MyISAM tables will be added in the future.
+  * Currently, backup only supports tables using the TokuDB storage engine and the MyISAM tables in the mysql database. Full support for InnoDB and MyISAM tables will be added in the future.
 
-    .. warning:: You must disable InnoDB asynchronous IO if backing up InnoDB tables via our enterprise backup functionality. The appropriate setting is ``innodb_use_native_aio=0``.
+    .. warning:: You must disable InnoDB asynchronous IO if backing up InnoDB tables via our backup functionality. The appropriate setting is ``innodb_use_native_aio=0``.
 
   * Transactional storage engines (TokuDB and InnoDB) will perform recovery on the backup copy of the database when it is first started.
 
@@ -110,15 +108,15 @@ Backup
 
   * The database is copied locally to the path specified in ``/path/to/backup``. This folder must exist, be writable, be empty, and contain enough space for a full copy of the database.
 
-  * Enterprise backup always makes a backup of the the MySQL ``datadir`` and optionally the ``tokudb_data_dir``, ``tokudb_log_dir``, and the binary log folder. The latter three are only backed up separately if they are not the same as or contained in the MySQL ``datadir``. None of these three folders can be a parent of the MySQL ``datadir``.
+  * It always makes a backup of the the MySQL ``datadir`` and optionally the ``tokudb_data_dir``, ``tokudb_log_dir``, and the binary log folder. The latter three are only backed up separately if they are not the same as or contained in the MySQL ``datadir``. None of these three folders can be a parent of the MySQL ``datadir``.
 
   * A folder is created in the given backup destination for each of the source folders.
 
   * No other directory structures are supported. All InnoDB, MyISAM, and other storage engine files must be within the MySQL ``datadir``.
 
-  * Enterprise backup does not follow symbolic links.
+  * Backup does not follow symbolic links.
 
-*Community Edition*
+*Alternative Backup Methods*
 
   TokuDB tables are represented in the file system with dictionary files, log files, and metadata files. A consistent copy of all of these files must be made during a backup. Copying the files while they may be modified by a running MySQL may result in an inconsistent copy of the database.
 

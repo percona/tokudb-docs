@@ -294,7 +294,7 @@ MySQL Server Variables
 
 ``tokudb_backup_throttle``
 
-  (Enterprise Edition) This variable specifies the maximum number of bytes per second the copier of a hot backup process will consume. Lowering its value will cause the hot backup operation to take more time but consume less IO on the server. The default value is 18446744073709551615.
+  This variable specifies the maximum number of bytes per second the copier of a hot backup process will consume. Lowering its value will cause the hot backup operation to take more time but consume less IO on the server. The default value is 18446744073709551615.
 
 ``tokudb_rpl_lookup_rows``
 
